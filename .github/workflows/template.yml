@@ -6,6 +6,7 @@ jobs:
     env:
       BUILD_CONFIG: "Release"
       WWW_ROOT_DIR: "Tailspin.SpaceGame.Web/wwwroot"
+      OUTPUT_PATH: "Tailspin.SpaceGame.Web/wwwroot/release"
       DOTNET_SDK_VERSION: "6.x"
 
     steps:
@@ -29,4 +30,4 @@ jobs:
         run: dotnet build
 
       - name: Create the package
-        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o ${{ env.GITHUB_REPOSITORY }}
+        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o ${{ env.OUTPUT_PATH }}

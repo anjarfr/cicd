@@ -25,13 +25,16 @@ jobs:
       - name: Run gulp tasks
         run: gulp
 
+      - name: Restore
+        run: dotnet restore
+
       - name: Build project
-        run: dotnet build
+        run: dotnet build --no-restore
 
       - name: Create the package
         run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o github.WORKSPACE/release
 
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: artifact
           path: github.WORKSPACE/release

@@ -42,8 +42,23 @@ jobs:
           name: artifact
           path: ${{ github.WORKSPACE }}/release
 
-      - name: "Run Azure webapp deploy action using publish profile credentials"
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.8
+        with:
+          name: website
+          path: ${{ github.WORKSPACE }}/release
+
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy web app
+        id: deploywebapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: kp-app-n6rbwr4r46wsy-action
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: website
+
+      - name: az cli logout
+        run: az logout

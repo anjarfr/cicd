@@ -45,7 +45,7 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2.0.8
         with:
-          name: website
+          name: artifact
           path: ${{ github.WORKSPACE }}/release
 
       - name: Login via Azure CLI
@@ -58,7 +58,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: kp-app-n6rbwr4r46wsy-action
-          package: website
+          package: artifact
 
       - name: az cli logout
         run: az logout

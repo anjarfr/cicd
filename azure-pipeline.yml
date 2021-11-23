@@ -32,12 +32,12 @@ steps:
     displayName: "Write build info"
     workingDirectory: $(wwwrootDir)
 
-  - script: "dotnet build ----configuration $(buildConfiguration)"
+  - task: DotNetCoreCLI@2
     displayName: "Build project for $(buildConfiguration)"
+    inputs:
+      command: "build"
 
   - task: DotNetCoreCLI@2
     inputs:
       command: "publish"
-      publishWebProjects: false
-      projects: "$(wwwrootDir)"
-      arguments: "-r linux-x64 -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)"
+      arguments: "-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)"

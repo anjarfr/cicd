@@ -30,4 +30,4 @@ jobs:
         run: dotnet build
 
       - name: Create the package
-        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o ${{ env.OUTPUT_PATH }}
+        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o github.WORKSPACE/release

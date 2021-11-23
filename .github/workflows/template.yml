@@ -32,9 +32,9 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Create the package
-        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o github.WORKSPACE/release
+        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o ${{ github.WORKSPACE }}
 
       - uses: actions/upload-artifact@v2
         with:
           name: artifact
-          path: github.WORKSPACE/release
+          path: ${{ github.WORKSPACE }}

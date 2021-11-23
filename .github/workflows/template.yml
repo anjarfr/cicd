@@ -6,7 +6,7 @@ jobs:
     env:
       BUILD_CONFIG: "Release"
       WWW_ROOT_DIR: "Tailspin.SpaceGame.Web/wwwroot"
-      DOTNET_SDK_VERSION: "6.x"
+      DOTNET_SDK_VERSION: "5.x"
 
     steps:
       - uses: actions/checkout@v2

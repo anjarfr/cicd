@@ -41,3 +41,8 @@ steps:
     inputs:
       command: "publish"
       arguments: "-c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)"
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Publich artifact"
+    inputs:
+      pathToPublish: "$(Build.ArtifactStagingDirectory)"

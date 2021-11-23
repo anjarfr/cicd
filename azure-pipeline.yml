@@ -37,6 +37,9 @@ steps:
     inputs:
       command: "build"
 
+  - script: dotnet test
+    displayName: Run tests
+
   - task: DotNetCoreCLI@2
     inputs:
       command: "publish"

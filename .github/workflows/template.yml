@@ -6,7 +6,6 @@ jobs:
     env:
       BUILD_CONFIG: "Release"
       WWW_ROOT_DIR: "Tailspin.SpaceGame.Web/wwwroot"
-      OUTPUT_PATH: "Tailspin.SpaceGame.Web/wwwroot/release"
       DOTNET_SDK_VERSION: "6.x"
 
     steps:
@@ -31,3 +30,8 @@ jobs:
 
       - name: Create the package
         run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o github.WORKSPACE/release
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: github.WORKSPACE/release

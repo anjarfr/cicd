@@ -1,0 +1,49 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  build-and-pack-project:
+    runs-on: ubuntu-latest
+    env:
+      BUILD_CONFIG: "Release"
+      WWW_ROOT_DIR: "Tailspin.SpaceGame.Web/wwwroot"
+      DOTNET_SDK_VERSION: "6.x"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_SDK_VERSION }}
+
+      - name: Npm install
+        run: npm install
+
+      - name: "Compile Sass assets"
+        run: ./node_modules/.bin/node-sass ${{ env.WWW_ROOT_DIR }} --output ${{ env.WWW_ROOT_DIR }}
+
+      - name: Run gulp tasks
+        run: gulp
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --no-restore
+
+      - name: Run tests
+        run: dotnet test
+
+      - name: Create the package
+        run: dotnet publish -c ${{ env.BUILD_CONFIG }} -o ${{ github.WORKSPACE }}/release
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: ${{ github.WORKSPACE }}/release
+
+      - name: "Run Azure webapp deploy action using publish profile credentials"
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: kp-app-n6rbwr4r46wsy-action
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
